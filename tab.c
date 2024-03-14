@@ -654,6 +654,61 @@ struct instr piano = {klavar_reset, klavar_sym, klavar_note, &pianofull};
 struct instr toy = {klavar_reset, klavar_sym, klavar_note, &pianotoy};
 
 /* ---------------- TODO: Kalimba -------------------- */
+struct kalimba {
+  int n;
+  int left;
+  int intervals[32];
+  int marks[32];
+};
+static void kalimba_reset(void *ctx) { (void)ctx; }
+static void kalimba_sym(void *ctx, int c) {
+  int i;
+  struct kalimba *kalimba = (struct kalimba *)ctx;
+  char *fill = CLINE;
+  if (c == '\n') return;
+  if (c == '|') fill = HLINE;
+  printf("%s", INDENT);
+  for (i = 0; i < kalimba->n; i++) { printf("%s%s%s", DIM, kalimba->marks[i] ? VLINE : fill, RST); }
+  printf("\n");
+}
+
+static void kalimba_note(void *ctx, int c) {
+  int i;
+  struct kalimba *kalimba = (struct kalimba *)ctx;
+  int tin = kalimba->left;
+  printf("%s", INDENT);
+  for (i = 0; i < kalimba->n; i++) {
+    char *fill = kalimba->marks[i] ? VLINE : CLINE;
+    char *color = DIM;
+    if (c == tin) {
+      fill = FF;
+      color = ACC;
+    } else if (isacc[c % 12] && (c == tin - 1 || c == tin + 1)) {
+      fill = FE;
+      color = DIM;
+    }
+    printf("%s%s%s", color, fill, RST);
+    tin = tin + kalimba->intervals[i];
+  }
+  printf("\n");
+}
+
+struct kalimba klmb17 = {
+    17,
+    C4 + 26,
+    /* d' b   g   e   c   A   F   D  C  E  G  B  d  f  a  c' e' */
+    {-3, -4, -3, -4, -3, -4, -3, -2, 4, 3, 4, 3, 3, 4, 3, 4, 0},
+    {0, 1, 0, 0, 1, 0, 0, 1, 0, 1, 0, 0, 1, 0, 0, 1, 0},
+};
+struct kalimba klmb21 = {
+    21,
+    C4 + 26,
+    /* d' b   g   e   c   A   F   D   B   G  F  A  C  E  G  B  d  f  a  c' e' */
+    {-3, -4, -3, -4, -3, -4, -3, -3, -4, -2, 4, 3, 4, 3, 4, 3, 3, 4, 3, 4, 0},
+    {0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0},
+};
+struct instr kalimba17 = {kalimba_reset, kalimba_sym, kalimba_note, &klmb17};
+struct instr kalimba21 = {kalimba_reset, kalimba_sym, kalimba_note, &klmb21};
 
 /* ---------------- TODO: Piano tabs like guiar -------------------- */
 
@@ -760,6 +815,8 @@ static struct {
     /* Keys */
     {"piano", "Klavarscribo for 48-key piano", &piano},
     {"toy", "Toy 25-key piano", &toy},
+    {"kalimba", "Kalimba (17 keys)", &kalimba17},
+    {"kalimba21", "Kalimba (21 keys)", &kalimba21},
     /* Other */
     {"jianpu", "Chinese Numeric Notation", &jianpu},
     {"123", "Chinese Numeric Notation", &jianpu},
