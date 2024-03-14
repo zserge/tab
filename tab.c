@@ -222,7 +222,6 @@ static void flute_note(void *ctx, int c) {
 }
 
 /*
-TODO: xaphoon
 TODO: more ocarina types
 TODO: Traverse flute
 TODO: Clarinet, Oboe, Duduk?
