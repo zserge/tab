@@ -222,7 +222,6 @@ static void flute_note(void *ctx, int c) {
 }
 
 /*
-TODO: naf4 (pentatonic)
 TODO: xaphoon
 TODO: more ocarina types
 TODO: Traverse flute
@@ -505,6 +504,35 @@ struct flute flute_naf5 = {
     },
 };
 
+/* Native American Flute in A (4 holes)*/
+struct flute flute_naf4 = { /* A:ACDEG, E:EGABD etc */
+    5,      /* 4 rows + overblow */
+    1,      /* 1 column */
+    C4 - 3, /* A-4 */
+    18,     /* One octave + 4 higher notes */
+    {
+        "xxxx ", /* A-3 */
+        "xxxQ ", /* A#3 */
+        "xxxl ", /* B-3 */
+        "xxxo ", /* C-4 */
+        "xxox ", /* C#4 */
+        "xxoo ", /* D-4 */
+        "xoxo ", /* D#4 */
+        "xooo ", /* E-4 */
+        "oxxo ", /* F-4 */
+        "qxoo ", /* F#4 */
+        "ooox ", /* G-5 */
+        "oooo ", /* G#5 */
+        "oxxx+", /* A-5 */
+        "xxxQ+", /* A#5 */
+        "xxxl+", /* B-5 */
+        "xxxo+", /* C-6 */
+        "xxlo+", /* C#5 */
+        "xxoo+", /* D-6 */
+    },
+};
+
+
 struct instr german = {flute_reset, flute_sym, flute_note, &flute_german};
 struct instr baroque = {flute_reset, flute_sym, flute_note, &flute_baroque};
 struct instr tinwhistle = {flute_reset, flute_sym, flute_note, &flute_tinwhistle};
@@ -513,6 +541,7 @@ struct instr trumpet = {flute_reset, flute_sym, flute_note, &flute_trumpet};
 struct instr sax = {flute_reset, flute_sym, flute_note, &flute_sax};
 struct instr naf = {flute_reset, flute_sym, flute_note, &flute_naf6};
 struct instr naf5 = {flute_reset, flute_sym, flute_note, &flute_naf5};
+struct instr naf4 = {flute_reset, flute_sym, flute_note, &flute_naf4};
 
 /* --------------------- Harmonica ----------------------- */
 struct harp {
@@ -826,6 +855,7 @@ static struct {
     {"naf", "Native American Flute in A (6-hole)", &naf},
     {"naf6", "Native American Flute in A (6-hole)", &naf},
     {"naf5", "Native American Flute in A (5-hole)", &naf5},
+    {"naf4", "Native American Flute in A (minor pentatonic, 4-hole)", &naf4},
     {"trumpet", "Trumbet", &trumpet},
     {"sax", "Alto Saxophone (Eb)", &sax},
     /* Harmonicas */
