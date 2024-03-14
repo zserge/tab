@@ -29,6 +29,8 @@ static char *FB = "◒";
 static char *FU = "◓";
 static char *FO = "▼";
 static char *FP = "+";
+static char *FES = "◦";
+static char *FFS = "•";
 
 #define NLINES 10               /* Max height of a multi-line buffer */
 #define LINESZ 1024             /* Max width of a multi-line buffer */
@@ -180,6 +182,9 @@ static void flute_note(void *ctx, int c) {
   for (i = 0; i < flute->n * flute->w; i++) {
     char *s = ln[i / flute->w];
     switch (fingering[i]) {
+      case 'B': strcatf(s, "%s%s%s", DIM, FFS, RST); break;
+      case 'X': strcatf(s, "%s%s%s", ACC, FFS, RST); break;
+      case 'O': strcatf(s, "%s%s%s", ACC, FES, RST); break;
       case 'x': strcatf(s, "%s%s%s", ACC, FF, RST); break;
       case 'o': strcatf(s, "%s%s%s", ACC, FE, RST); break;
       case 'l': strcatf(s, "%s%s%s", ACC, FL, RST); break;
@@ -197,7 +202,6 @@ static void flute_note(void *ctx, int c) {
 }
 
 /*
-TODO: recorder (two fingerings)
 TODO: naf4 (pentatonic)
 TODO: xaphoon
 TODO: more ocarina types
@@ -205,6 +209,80 @@ TODO: Traverse flute
 TODO: Clarinet, Oboe, Duduk?
 TODO: Bansuri? Quena? Shakuhachi?
 */
+
+/* Recorder German */
+struct flute flute_german = {
+    8,  /* 8 rows: 7 holes + octave */
+    1,  /* 1 column */
+    C4, /* C-4 */
+    27, /* Octaves + 1 higher notes */
+    {
+        "Xxxxxxxx", /* C-4 */
+        "Xxxxxxxl", /* C#4 */
+        "Xxxxxxxo", /* D-4 */
+        "Xxxxxxlo", /* D#4 */
+        "Xxxxxxoo", /* E-4 */
+        "Xxxxxooo", /* F-4 */
+        "Xxxxoxxx", /* F#4 */
+        "Xxxxoooo", /* G-4 */
+        "Xxxoxxlo", /* G#4 */
+        "Xxxooooo", /* A-4 */
+        "Xxoxxooo", /* A#4 */
+        "Xxoooooo", /* B-4 */
+        "Xoxooooo", /* C-5 */
+        "Oxxooooo", /* C#5 */
+        "Ooxooooo", /* D-5 */
+        "Ooxxxxxo", /* D#5 */
+        "Bxxxxxoo", /* E-5 */
+        "Bxxxxooo", /* F-5 */
+        "Bxxxoxox", /* F#5 */
+        "Bxxxoooo", /* G-5 */
+        "Bxxxoxxx", /* G#5 */
+        "Bxxooooo", /* A-5 */
+        "Bxxoxxxo", /* A#5 */
+        "Bxxoxxoo", /* B-5 */
+        "Bxooxxoo", /* C-5 */
+        "Bxrxxoxx", /* C#5 */
+        "Bxoxxoxl", /* D-6 */
+    },
+};
+
+/* Recorder Baroque */
+struct flute flute_baroque = {
+    8,  /* 8 rows: 7 holes + octave */
+    1,  /* 1 column */
+    C4, /* C-4 */
+    27, /* Octaves + 1 higher notes */
+    {
+        "Xxxxxxxx", /* C-4 */
+        "Xxxxxxxl", /* C#4 */
+        "Xxxxxxxo", /* D-4 */
+        "Xxxxxxlo", /* D#4 */
+        "Xxxxxxoo", /* E-4 */
+        "Xxxxxoxx", /* F-4 */
+        "Xxxxoxxo", /* F#4 */
+        "Xxxxoooo", /* G-4 */
+        "Xxxoxxlo", /* G#4 */
+        "Xxxooooo", /* A-4 */
+        "Xxoxxooo", /* A#4 */
+        "Xxoooooo", /* B-4 */
+        "Xoxooooo", /* C-5 */
+        "Oxxooooo", /* C#5 */
+        "Ooxooooo", /* D-5 */
+        "Ooxxxxxo", /* D#5 */
+        "Bxxxxxoo", /* E-5 */
+        "Bxxxxoxo", /* F-5 */
+        "Bxxxoxoo", /* F#5 */
+        "Bxxxoooo", /* G-5 */
+        "Bxxoxooo", /* G#5 */
+        "Bxxooooo", /* A-5 */
+        "Bxxoxxxo", /* A#5 */
+        "Bxxoxxoo", /* B-5 */
+        "Bxooxxoo", /* C-5 */
+        "Bxrxxoxx", /* C#5 */
+        "Bxoxxoxl", /* D-6 */
+    },
+};
 
 /* Irish Tin Whistle in D */
 struct flute flute_tinwhistle = {
@@ -229,14 +307,14 @@ struct flute flute_tinwhistle = {
         "xxxxxl+", /* D#5 */
         "xxxxxo+", /* E-5 */
         "xxxxlo+", /* F-5 */
-        "xxxxoo+", /* F-5 */
+        "xxxxoo+", /* F#5 */
         "xxxooo+", /* G-5 */
-        "xxlooo+", /* G-5 */
+        "xxlooo+", /* G#5 */
         "xxoooo+", /* A-5 */
-        "xoxxxx+", /* A-5 */
+        "xoxxxx+", /* A#5 */
         "xooooo+", /* B-5 */
         "oxxooo+", /* C-5 */
-        "oooooo+", /* C-5 */
+        "oooooo+", /* C#5 */
         "oxxxxx+", /* D-6 */
     },
 };
@@ -407,6 +485,8 @@ struct flute flute_naf5 = {
     },
 };
 
+struct instr german = {flute_reset, flute_sym, flute_note, &flute_german};
+struct instr baroque = {flute_reset, flute_sym, flute_note, &flute_baroque};
 struct instr tinwhistle = {flute_reset, flute_sym, flute_note, &flute_tinwhistle};
 struct instr pendant = {flute_reset, flute_sym, flute_note, &flute_pendant};
 struct instr trumpet = {flute_reset, flute_sym, flute_note, &flute_trumpet};
@@ -662,6 +742,10 @@ static struct {
     {"2gd", "Two-string Diddley Bow (G+D)", &gd},
     {"2gc", "Two-string Diddley Bow (G+C)", &gc},
     /* Woodwind+Brass */
+    {"recorder", "Recorder in C (German System)", &german},
+    {"german", "Recorder in C (German System)", &german},
+    {"baroque", "Recorder in C (Baroque/English System)", &baroque},
+    {"english", "Recorder in C (Baroque/English System)", &baroque},
     {"whistle", "Irish Tin Whistle in D", &tinwhistle},
     {"pendant", "Pendant Ocarina (4-hole)", &pendant},
     {"naf", "Native American Flute in A (6-hole)", &naf},
