@@ -415,8 +415,59 @@ struct instr naf = {flute_reset, flute_sym, flute_note, &flute_naf6};
 struct instr naf5 = {flute_reset, flute_sym, flute_note, &flute_naf5};
 
 /* --------------------- Harmonica ----------------------- */
-
-/* TODO */
+struct harp {
+  int k; /* key */
+  int r; /* range in semitones */
+  char *layout;
+};
+static void harp_reset(void *ctx) {
+  (void)ctx;
+  ln[0][0] = 0;
+}
+static void harp_sym(void *ctx, int c) {
+  switch (c) {
+    case ' ': strcatf(ln[0], " "); break;
+    case '|': strcatf(ln[0], "%s%s %s", DIM, VLINE, RST); break;
+    case '\n':
+      printf("%s%s\n", INDENT, ln[0]);
+      harp_reset(ctx);
+      break;
+  }
+}
+static void harp_note(void *ctx, int c) {
+  int i;
+  char *p;
+  struct harp *harp = (struct harp *)ctx;
+  if (c < harp->k || c >= harp->k + harp->r) {
+    strcatf(ln[0], "%s%s %s", ERR, "x", RST);
+    return;
+  }
+  p = harp->layout;
+  for (i = c - harp->k; i > 0; i--) { p = p + strlen(p) + 1; }
+  strcatf(ln[0], "%s%s %s", ACC, p, RST);
+}
+struct harp d_harp = {
+    C4,
+    37,
+    /* Octave 4 */
+    "+1\0-1'\0-1\0+1'\0+2\0-2\"\0-2'\0-2\0-3\"\0-3\"\0-3'\0-3\0"
+    /* Octave 5 */
+    "+4\0-4'\0-4\0+4'\0+5\0-5\0+5'\0+6\0-6'\0-6\0+6'\0-7\0"
+    /* Octave 6 */
+    "+7\0-7'\0-8\0+8'\0+8\0-9\0+9'\0+9\0-9'\0-10\0+10\"\0+10'\0+10\0-10'",
+};
+struct harp c_harp = {
+    C4,
+    38,
+    /* Octave 4 */
+    "+1\0+1^\0-1\0-1^\0+2\0-2\0-2^\0+3\0+3^\0-3\0-3^\0-4\0"
+    /* Octave 5 */
+    "+5\0+5^\0-5\0-5^\0+6\0-6\0-6^\0+7\0+7^\0-7\0-7^\0-8\0"
+    /* Octave 6 */
+    "+9\0+9^\0-9\0-9^\0+10\0-10\0-10^\0+11\0+11^\0-11\0-11^\0-12\0+12\0+12^",
+};
+struct instr diatonic = {harp_reset, harp_sym, harp_note, &d_harp};
+struct instr chromatic = {harp_reset, harp_sym, harp_note, &c_harp};
 
 /* ---------------------- Jianpu ------------------------- */
 struct jianpu {
@@ -618,6 +669,10 @@ static struct {
     {"naf5", "Native American Flute in A (5-hole)", &naf5},
     {"trumpet", "Trumbet", &trumpet},
     {"sax", "Alto Saxophone (Eb)", &sax},
+    /* Harmonicas */
+    {"harp", "Diatonic Harmonica in C", &diatonic},
+    {"diatonic", "Diatonic Harmonica in C", &diatonic},
+    {"chromatic", "Chromatic Harmonica in C", &chromatic},
     /* Keys */
     {"piano", "Klavarscribo for 48-key piano", &piano},
     {"toy", "Toy 25-key piano", &toy},
