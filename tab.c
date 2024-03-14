@@ -17,7 +17,7 @@ static char *INDENT = "    ";
 static char *SHARP = "♯";
 static char *VLINE = "│";
 static char *HLINE = "─";
-static char *CLINE = "┊";
+static char *DLINE = "┊";
 
 static char *FE = "○";
 static char *FF = "●";
@@ -31,6 +31,26 @@ static char *FO = "▼";
 static char *FP = "+";
 static char *FES = "◦";
 static char *FFS = "•";
+
+static void decolorize(void) { RST = TXT = DIM = ACC = ERR = ""; }
+static void asciify(void) {
+  SHARP = "#";
+  VLINE = "|";
+  HLINE = "-";
+  DLINE = ":";
+  FE = "o";
+  FF = "x";
+  FL = "<";
+  FR = ">";
+  FT = "^";
+  FB = "v";
+  FQ = "~";
+  FT = "@";
+  FO = "+";
+  FP = "+";
+  FES = ".";
+  FFS = "*";
+}
 
 #define NLINES 10               /* Max height of a multi-line buffer */
 #define LINESZ 1024             /* Max width of a multi-line buffer */
@@ -623,7 +643,7 @@ static void klavar_sym(void *ctx, int c) {
   for (i = 0; i < klavar->n; i++) {
     printf("%s%s%s", (i % 12 == 0 ? ACC : DIM),
            (isacc[i % 12] ? VLINE
-            : i % 12 == 0 ? CLINE
+            : i % 12 == 0 ? DLINE
                           : fill),
            RST);
   }
@@ -641,7 +661,7 @@ static void klavar_note(void *ctx, int c) {
       fill = isacc[i % 12] ? FE : FF;
       color = ACC;
     } else {
-      fill = isacc[i % 12] ? VLINE : i % 12 == 0 ? CLINE : " ";
+      fill = isacc[i % 12] ? VLINE : i % 12 == 0 ? DLINE : " ";
     }
     printf("%s%s%s", color, fill, RST);
   }
@@ -664,7 +684,7 @@ static void kalimba_reset(void *ctx) { (void)ctx; }
 static void kalimba_sym(void *ctx, int c) {
   int i;
   struct kalimba *kalimba = (struct kalimba *)ctx;
-  char *fill = CLINE;
+  char *fill = DLINE;
   if (c == '\n') return;
   if (c == '|') fill = HLINE;
   printf("%s", INDENT);
@@ -678,7 +698,7 @@ static void kalimba_note(void *ctx, int c) {
   int tin = kalimba->left;
   printf("%s", INDENT);
   for (i = 0; i < kalimba->n; i++) {
-    char *fill = kalimba->marks[i] ? VLINE : CLINE;
+    char *fill = kalimba->marks[i] ? VLINE : DLINE;
     char *color = DIM;
     if (c == tin) {
       fill = FF;
@@ -824,10 +844,14 @@ static struct {
 
 static void usage(const char *argv0) {
   unsigned int i;
-  fprintf(stderr, "USAGE: %s [-t tab] [-x num] [file ...]\n", argv0);
+  fprintf(stderr, "USAGE: %s [-i inst] [-t steps] [file ...]\n", argv0);
   fprintf(stderr, "\nOptions:\n\n");
   fprintf(stderr, "  -i NAME\tSpecify the instrument for rendering tabs (see below)\n");
   fprintf(stderr, "  -t NUM\tTranspose the music by NUM semitones\n");
+  fprintf(stderr, "  -c    \tForce colored output\n");
+  fprintf(stderr, "  -C    \tDisable colored output\n");
+  fprintf(stderr, "  -a    \tDisable unicode (use ASCII)\n");
+  fprintf(stderr, "  -h    \tShow this help\n");
   fprintf(stderr, "\nInstruments:\n\n");
   for (i = 0; i < sizeof(INST) / sizeof(INST[0]); i++) {
     fprintf(stderr, "  * %-10s\t%s\n", INST[i].name, INST[i].descr);
@@ -838,14 +862,17 @@ static void usage(const char *argv0) {
 int main(int argc, char *argv[]) {
   int c;
   int found = 0;
+  int colorize = 0;
   int xpose = 0;
   unsigned int t;
   struct instr *instr = &guitar;
 
-  /* TODO: respect isatty, NO_COLOR and -d for dumb ascii output */
   /* TODO: custom indent */
-  while ((c = getopt(argc, argv, "hi:t:")) != -1) {
+  while ((c = getopt(argc, argv, "hCcai:t:")) != -1) {
     switch (c) {
+      case 'c': colorize = 1; break;
+      case 'C': decolorize(); break;
+      case 'a': asciify(); break;
       case 'i':
         for (t = 0; t < sizeof(INST) / sizeof(INST[0]); t++) {
           if (strcmp(INST[t].name, optarg) == 0) {
@@ -862,6 +889,11 @@ int main(int argc, char *argv[]) {
       case 't': xpose = atoi(optarg); break; /* TODO: invalid transpose */
       default:  usage(argv[0]); return 1;
     }
+  }
+
+  if ((!isatty(STDOUT_FILENO) || (getenv("NO_COLOR") != NULL && strcmp(getenv("NO_COLOR"), "0"))) &&
+      !colorize) {
+    decolorize();
   }
 
   if (optind == argc) {
