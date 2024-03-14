@@ -602,7 +602,7 @@ static struct {
   const char *name;
   const char *descr;
   struct instr *instr;
-} TABS[] = {
+} INST[] = {
     /* String */
     {"guitar", "6-string Guitar Tabs", &guitar},
     {"uke", "Ukulele Tabs", &uke},
@@ -630,11 +630,11 @@ static void usage(const char *argv0) {
   unsigned int i;
   fprintf(stderr, "USAGE: %s [-t tab] [-x num] [file ...]\n", argv0);
   fprintf(stderr, "\nOptions:\n\n");
-  fprintf(stderr, "  -t TAB\tUse TAB tabulature format (see below)\n");
-  fprintf(stderr, "  -x NUM\tTranspose by NUM semitones\n");
-  fprintf(stderr, "\nTabulature Formats:\n\n");
-  for (i = 0; i < sizeof(TABS) / sizeof(TABS[0]); i++) {
-    fprintf(stderr, "  * %-10s\t%s\n", TABS[i].name, TABS[i].descr);
+  fprintf(stderr, "  -i NAME\tSpecify the instrument for rendering tabs (see below)\n");
+  fprintf(stderr, "  -t NUM\tTranspose the music by NUM semitones\n");
+  fprintf(stderr, "\nInstruments:\n\n");
+  for (i = 0; i < sizeof(INST) / sizeof(INST[0]); i++) {
+    fprintf(stderr, "  * %-10s\t%s\n", INST[i].name, INST[i].descr);
   }
   fprintf(stderr, "\n");
 }
@@ -647,17 +647,17 @@ int main(int argc, char *argv[]) {
 
   /* TODO: respect isatty, NO_COLOR and -d for dumb ascii output */
   /* TODO: custom indent */
-  while ((c = getopt(argc, argv, "ht:x:")) != -1) {
+  while ((c = getopt(argc, argv, "hi:t:")) != -1) {
     switch (c) {
-      case 't':
-        for (t = 0; t < sizeof(TABS) / sizeof(TABS[0]); t++) {
-          if (strcmp(TABS[t].name, optarg) == 0) {
-            instr = TABS[t].instr;
+      case 'i':
+        for (t = 0; t < sizeof(INST) / sizeof(INST[0]); t++) {
+          if (strcmp(INST[t].name, optarg) == 0) {
+            instr = INST[t].instr;
             break;
           }
         }
         break;
-      case 'x': xpose = atoi(optarg); break; /* TODO: invalid transpose */
+      case 't': xpose = atoi(optarg); break; /* TODO: invalid transpose */
       default:  usage(argv[0]); return 1;
     }
   }
