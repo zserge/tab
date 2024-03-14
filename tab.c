@@ -260,8 +260,8 @@ struct flute flute_german = {
         "Bxxooooo", /* A-5 */
         "Bxxoxxxo", /* A#5 */
         "Bxxoxxoo", /* B-5 */
-        "Bxooxxoo", /* C-5 */
-        "Bxrxxoxx", /* C#5 */
+        "Bxooxxoo", /* C-6 */
+        "Bxrxxoxx", /* C#6 */
         "Bxoxxoxl", /* D-6 */
     },
 };
@@ -297,8 +297,8 @@ struct flute flute_baroque = {
         "Bxxooooo", /* A-5 */
         "Bxxoxxxo", /* A#5 */
         "Bxxoxxoo", /* B-5 */
-        "Bxooxxoo", /* C-5 */
-        "Bxrxxoxx", /* C#5 */
+        "Bxooxxoo", /* C-6 */
+        "Bxrxxoxx", /* C#6 */
         "Bxoxxoxl", /* D-6 */
     },
 };
@@ -332,8 +332,8 @@ struct flute flute_tinwhistle = {
         "xxoooo+", /* A-5 */
         "xoxxxx+", /* A#5 */
         "xooooo+", /* B-5 */
-        "oxxooo+", /* C-5 */
-        "oooooo+", /* C#5 */
+        "oxxooo+", /* C-6 */
+        "oooooo+", /* C#6 */
         "oxxxxx+", /* D-6 */
     },
 };
@@ -362,6 +362,41 @@ struct flute flute_pendant = {
         " oo  oo x  o", /* D-5 */
         " oo  ox o  o", /* D#5 */
         " oo  oo o  o", /* E-5 */
+    },
+};
+
+/* Xaphoon (Pocket Sax) in C */
+struct flute flute_xaphoon = {
+    9,  /* 8 rows + 1 octave row */
+    1,  /* 4 cols: octave keys are drawn somewhat apart */
+    C4, /* Key of C */
+    25, /* Two octaves + 1 Do */
+    {
+        "Xxxxxxxxx", /* C-4 */
+        "Xxxxxxxxl", /* C#4 */
+        "Xxxxxxxxo", /* D-4 */
+        "Xxxxxxxox", /* D#4 */
+        "Xxxxxxxoo", /* E-4 */
+        "Xxxxxxooo", /* F-4 */
+        "Xxxxxoxxx", /* F#4 */
+        "Xxxxxoooo", /* G-4 */
+        "Xxxxoxxxo", /* G#4 */
+        "Xxxxooooo", /* A-4 */
+        "Xxxoooooo", /* A#4 */
+        "Xxoxxxooo", /* B-4 */
+        "Xxooooooo", /* C-5 */
+        "Oxxxxoooo", /* C#5 */
+        "Oxooooooo", /* D-5 */
+        "Xoxxxoooo", /* D#5 */
+        "Xoooooooo", /* E-5 */
+        "Ooooooooo", /* F-5 */
+        "Xoxxxxxxx", /* F#5, lowered by lip pressure */
+        "Xoxxxxxxx", /* G-5 */
+        "Xoxxxxxxl", /* G#5 */
+        "Xxxxxxxxo", /* A-5 */
+        "Xxxxxxxoo", /* A#5 */
+        "Xxxxxxooo", /* B-5 */
+        "Xxxxxoooo", /* C-6 */
     },
 };
 
@@ -505,7 +540,8 @@ struct flute flute_naf5 = {
 };
 
 /* Native American Flute in A (4 holes)*/
-struct flute flute_naf4 = { /* A:ACDEG, E:EGABD etc */
+struct flute flute_naf4 = {
+    /* A:ACDEG, E:EGABD etc */
     5,      /* 4 rows + overblow */
     1,      /* 1 column */
     C4 - 3, /* A-4 */
@@ -532,10 +568,10 @@ struct flute flute_naf4 = { /* A:ACDEG, E:EGABD etc */
     },
 };
 
-
 struct instr german = {flute_reset, flute_sym, flute_note, &flute_german};
 struct instr baroque = {flute_reset, flute_sym, flute_note, &flute_baroque};
 struct instr tinwhistle = {flute_reset, flute_sym, flute_note, &flute_tinwhistle};
+struct instr xaphoon = {flute_reset, flute_sym, flute_note, &flute_xaphoon};
 struct instr pendant = {flute_reset, flute_sym, flute_note, &flute_pendant};
 struct instr trumpet = {flute_reset, flute_sym, flute_note, &flute_trumpet};
 struct instr sax = {flute_reset, flute_sym, flute_note, &flute_sax};
@@ -851,6 +887,7 @@ static struct {
     {"baroque", "Recorder (Baroque/English System)", &baroque},
     {"english", "Recorder (Baroque/English System)", &baroque},
     {"whistle", "Irish Tin Whistle in D", &tinwhistle},
+    {"xaphoon", "Xaphoon (Pocket Sax)", &xaphoon},
     {"pendant", "Pendant Ocarina (4-hole)", &pendant},
     {"naf", "Native American Flute in A (6-hole)", &naf},
     {"naf6", "Native American Flute in A (6-hole)", &naf},
