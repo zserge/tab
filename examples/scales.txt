@@ -1,0 +1,16 @@
+Major Scale (Octave 3):
+C,D,E,F,|G,A,B,C
+
+Major Scale (Octave 4):
+CDEF|GABc
+
+Major Scale (Octave 5):
+cdef|gabc'
+
+Major Scale (Octave 6):
+c'd'e'f'|g'a'b'c''
+
+Chromatic Scale:
+CC#DD#EFF#GG#AA#B
+
+cc#dd#eff#gg#aa#b
