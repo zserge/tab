@@ -837,6 +837,7 @@ static void usage(const char *argv0) {
 
 int main(int argc, char *argv[]) {
   int c;
+  int found = 0;
   int xpose = 0;
   unsigned int t;
   struct instr *instr = &guitar;
@@ -849,8 +850,13 @@ int main(int argc, char *argv[]) {
         for (t = 0; t < sizeof(INST) / sizeof(INST[0]); t++) {
           if (strcmp(INST[t].name, optarg) == 0) {
             instr = INST[t].instr;
+            found = 1;
             break;
           }
+        }
+        if (!found) {
+          fprintf(stderr, "Unknown instrument: %s\n", optarg);
+          return 1;
         }
         break;
       case 't': xpose = atoi(optarg); break; /* TODO: invalid transpose */
