@@ -1,6 +1,6 @@
-# `tabs` - Put Music in Your Hands!
+# `tab` - Put Music in Your Hands!
 
-Tabs is a tiny command-line utility to render tablatures for numerous music instruments.
+Tab is a tiny command-line utility to render tablatures for numerous music instruments.
 
 ## Features
 
@@ -39,13 +39,13 @@ MIDI support is planned, and please contribute if your favourite instrument is n
 
 ## Usage
 
-It's easy to build and install `tabs` from sources:
+It's easy to build and install `tab` from sources:
 
 ```
-$ git clone https://github.com/zserge/tabs
-$ cd tabs
+$ git clone https://github.com/zserge/tab
+$ cd tab
 $ make
-$ ./tabs -i uke -x 5 examples/ode_to_joy.abc
+$ ./tab -i uke -x 5 examples/ode_to_joy.abc
 
     A│-------------0---│---0---------------│-------------------│-------------│-
     E│-2---2-----------│-----------2---0---│-----------0---2---│---2-0---0---│-
@@ -57,9 +57,9 @@ $ ./tabs -i uke -x 5 examples/ode_to_joy.abc
 
 ## Input format
 
-Tabs work well with [ABC notation](https://abcnotation.com/) but you may use a simplified text notation, too.
+Tab work well with [ABC notation](https://abcnotation.com/) but you may use a simplified text notation, too.
 
-Tabs operate over a range of 4 octaves from C3 to B6. This seems to be sufficient for most instruments that use tablature music notation.
+Tab operate over a range of 4 octaves from C3 to B6. This seems to be sufficient for most instruments that use tablature music notation.
 
 Notes are written as letters ("CDEFGAB" for octave 4 and "cdefgab" for octave 5). Notes in octave 3 are followed by `,` and notes in octave `6` are followed by `'`. Technically, octaves can be lowered and raised even further, but most instrument won't be able to display such tabs correctly.
 
@@ -126,6 +126,6 @@ And for Cigar Box Guitar it would become:
 
 ## Contributing
 
-Contributions to Tabs are welcome! Whether you want to report a bug, request a feature, or submit a pull request, please feel free to get involved.
+Contributions to Tab are welcome! Whether you want to report a bug, request a feature, or submit a pull request, please feel free to get involved.
 
-Tabs is open-source software licensed under the [MIT License](/LICENSE).
+Tab is open-source software licensed under the [MIT License](/LICENSE).
