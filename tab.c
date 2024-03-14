@@ -797,10 +797,10 @@ static struct {
     {"2gd", "Two-string Diddley Bow (G+D)", &gd},
     {"2gc", "Two-string Diddley Bow (G+C)", &gc},
     /* Woodwind+Brass */
-    {"recorder", "Recorder in C (German System)", &german},
-    {"german", "Recorder in C (German System)", &german},
-    {"baroque", "Recorder in C (Baroque/English System)", &baroque},
-    {"english", "Recorder in C (Baroque/English System)", &baroque},
+    {"recorder", "Recorder (German System)", &german},
+    {"german", "Recorder (German System)", &german},
+    {"baroque", "Recorder (Baroque/English System)", &baroque},
+    {"english", "Recorder (Baroque/English System)", &baroque},
     {"whistle", "Irish Tin Whistle in D", &tinwhistle},
     {"pendant", "Pendant Ocarina (4-hole)", &pendant},
     {"naf", "Native American Flute in A (6-hole)", &naf},
@@ -809,9 +809,9 @@ static struct {
     {"trumpet", "Trumbet", &trumpet},
     {"sax", "Alto Saxophone (Eb)", &sax},
     /* Harmonicas */
-    {"harp", "Diatonic Harmonica in C", &diatonic},
-    {"diatonic", "Diatonic Harmonica in C", &diatonic},
-    {"chromatic", "Chromatic Harmonica in C", &chromatic},
+    {"harp", "Diatonic Harmonica", &diatonic},
+    {"diatonic", "Diatonic Harmonica", &diatonic},
+    {"chromatic", "Chromatic Harmonica", &chromatic},
     /* Keys */
     {"piano", "Klavarscribo for 48-key piano", &piano},
     {"toy", "Toy 25-key piano", &toy},
