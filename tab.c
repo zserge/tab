@@ -653,7 +653,7 @@ struct klavar pianotoy = {25, C4};
 struct instr piano = {klavar_reset, klavar_sym, klavar_note, &pianofull};
 struct instr toy = {klavar_reset, klavar_sym, klavar_note, &pianotoy};
 
-/* ---------------- TODO: Kalimba -------------------- */
+/* ---------------- Kalimba -------------------- */
 struct kalimba {
   int n;
   int left;
