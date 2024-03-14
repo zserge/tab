@@ -206,74 +206,74 @@ TODO: Clarinet, Oboe, Duduk?
 TODO: Bansuri? Quena? Shakuhachi?
 */
 
-/* Irish Tin Whistle in D*/
+/* Irish Tin Whistle in D */
 struct flute flute_tinwhistle = {
     7,      /* 4 rows: 6 holes + overblow */
-    1,      /* 1 column*/
-    C4 + 2, /* D-4*/
-    25,     /* Octaves + 1 higher notes*/
+    1,      /* 1 column */
+    C4 + 2, /* D-4 */
+    25,     /* Octaves + 1 higher notes */
     {
-        "xxxxxx ", /* D-4*/
-        "xxxxxl ", /* D#4*/
-        "xxxxxo ", /* E-4*/
-        "xxxxlo ", /* F-4*/
-        "xxxxoo ", /* F#4*/
-        "xxxooo ", /* G-4*/
-        "xxlooo ", /* G#4*/
-        "xxoooo ", /* A-4*/
-        "xoxxxx ", /* A#4*/
-        "xooooo ", /* B-4*/
-        "oxxooo ", /* C-5*/
-        "oooooo ", /* C#5*/
-        "oxxxxx ", /* D-5*/
-        "xxxxxl+", /* D#5*/
-        "xxxxxo+", /* E-5*/
-        "xxxxlo+", /* F-5*/
-        "xxxxoo+", /* F-5*/
-        "xxxooo+", /* G-5*/
-        "xxlooo+", /* G-5*/
-        "xxoooo+", /* A-5*/
-        "xoxxxx+", /* A-5*/
-        "xooooo+", /* B-5*/
-        "oxxooo+", /* C-5*/
-        "oooooo+", /* C-5*/
-        "oxxxxx+", /* D-6*/
+        "xxxxxx ", /* D-4 */
+        "xxxxxl ", /* D#4 */
+        "xxxxxo ", /* E-4 */
+        "xxxxlo ", /* F-4 */
+        "xxxxoo ", /* F#4 */
+        "xxxooo ", /* G-4 */
+        "xxlooo ", /* G#4 */
+        "xxoooo ", /* A-4 */
+        "xoxxxx ", /* A#4 */
+        "xooooo ", /* B-4 */
+        "oxxooo ", /* C-5 */
+        "oooooo ", /* C#5 */
+        "oxxxxx ", /* D-5 */
+        "xxxxxl+", /* D#5 */
+        "xxxxxo+", /* E-5 */
+        "xxxxlo+", /* F-5 */
+        "xxxxoo+", /* F-5 */
+        "xxxooo+", /* G-5 */
+        "xxlooo+", /* G-5 */
+        "xxoooo+", /* A-5 */
+        "xoxxxx+", /* A-5 */
+        "xooooo+", /* B-5 */
+        "oxxooo+", /* C-5 */
+        "oooooo+", /* C-5 */
+        "oxxxxx+", /* D-6 */
     },
 };
 
 /* Pendant Ocarina in C (4 holes + 2 optional octave holes)*/
 struct flute flute_pendant = {
-    3,  /* 3 rows: 2x2 holes + 1 octave row*/
-    4,  /* 4 cols: octave keys are drawn somewhat apart*/
-    C4, /* Key of C*/
-    17, /* One octave + 4 higher notes*/
+    3,  /* 3 rows: 2x2 holes + 1 octave row */
+    4,  /* 4 cols: octave keys are drawn somewhat apart */
+    C4, /* Key of C */
+    17, /* One octave + 4 higher notes */
     {
-        " xx  xx     ", /* C-4*/
-        " xr  xx     ", /* C#4*/
-        " xo  xx     ", /* D-4*/
-        " xx  xr     ", /* D#4*/
-        " xx  xo     ", /* E-4*/
-        " xo  xo     ", /* F-4*/
-        " ox  xx     ", /* F#4*/
-        " oo  xx     ", /* G-4*/
-        " ox  xo     ", /* G#4*/
-        " oo  xo     ", /* A-4*/
-        " oo  ox     ", /* A#4*/
-        " ox  oo     ", /* B-4*/
-        " oo  oo     ", /* C-5*/
-        " oo  ox x  o", /* C#5*/
-        " oo  oo x  o", /* D-5*/
-        " oo  ox o  o", /* D#5*/
-        " oo  oo o  o", /* E-5*/
+        " xx  xx     ", /* C-4 */
+        " xr  xx     ", /* C#4 */
+        " xo  xx     ", /* D-4 */
+        " xx  xr     ", /* D#4 */
+        " xx  xo     ", /* E-4 */
+        " xo  xo     ", /* F-4 */
+        " ox  xx     ", /* F#4 */
+        " oo  xx     ", /* G-4 */
+        " ox  xo     ", /* G#4 */
+        " oo  xo     ", /* A-4 */
+        " oo  ox     ", /* A#4 */
+        " ox  oo     ", /* B-4 */
+        " oo  oo     ", /* C-5 */
+        " oo  ox x  o", /* C#5 */
+        " oo  oo x  o", /* D-5 */
+        " oo  ox o  o", /* D#5 */
+        " oo  oo o  o", /* E-5 */
     },
 };
 
-/* Alto Saxophone in Bb*/
+/* Alto Saxophone in Bb */
 struct flute flute_sax = {
     8,      /* 7 rows: 3+3+1 buttons and a delimiter */
     3,      /* 3 columns: octave key, main keys, additional keys */
     C4 - 2, /* Bb */
-    32,     /* 2 octaves + 6 lower notes + 1 higher*/
+    32,     /* 2 octaves + 6 lower notes + 1 higher */
     {
         " x  x  x  -b x  x  x b  ", /* A#3 */
         " x  x  x  -l x  x  x b  ", /* B-3 */
@@ -310,100 +310,100 @@ struct flute flute_sax = {
     },
 };
 
-/* Trumpet in Bb*/
+/* Trumpet in Bb */
 struct flute flute_trumpet = {
-    4,      /* 4 rows: Partial note + 3 buttons*/
-    1,      /* 1 column*/
-    C4 - 6, /* F#3*/
-    31,     /* 2 octaves + 6 lower notes + 1 higher*/
+    4,      /* 4 rows: Partial note + 3 buttons */
+    1,      /* 1 column */
+    C4 - 6, /* F#3 */
+    31,     /* 2 octaves + 6 lower notes + 1 higher */
     {
-        "Cxxx", /* F#3 - 1st partial*/
-        "Cxox", /* G-3*/
-        "Coxx", /* G#3*/
-        "Cxxo", /* A-3*/
-        "Cxoo", /* A#3*/
-        "Coxo", /* B-3*/
-        "Cooo", /* C-4*/
-        "Gxxx", /* C#4 - 2nd partial*/
-        "Gxox", /* D-4*/
-        "Goxx", /* D#4*/
-        "Gxxo", /* E-4*/
-        "Gxoo", /* F-4*/
-        "Goxo", /* F#4*/
-        "Gooo", /* G-4*/
-        "coxx", /* G#4 - 3rd partial*/
-        "cxxo", /* A-4*/
-        "cxoo", /* A#4*/
-        "coxo", /* B-4*/
-        "cooo", /* C-5*/
-        "exxo", /* C#5 - 4th partial*/
-        "exoo", /* D-5*/
-        "eoxo", /* D#5*/
-        "eooo", /* E-5*/
-        "gxoo", /* F-5 - 5th partial*/
-        "goxo", /* F#5*/
-        "gooo", /* G-5*/
+        "Cxxx", /* F#3 - 1st partial */
+        "Cxox", /* G-3 */
+        "Coxx", /* G#3 */
+        "Cxxo", /* A-3 */
+        "Cxoo", /* A#3 */
+        "Coxo", /* B-3 */
+        "Cooo", /* C-4 */
+        "Gxxx", /* C#4 - 2nd partial */
+        "Gxox", /* D-4 */
+        "Goxx", /* D#4 */
+        "Gxxo", /* E-4 */
+        "Gxoo", /* F-4 */
+        "Goxo", /* F#4 */
+        "Gooo", /* G-4 */
+        "coxx", /* G#4 - 3rd partial */
+        "cxxo", /* A-4 */
+        "cxoo", /* A#4 */
+        "coxo", /* B-4 */
+        "cooo", /* C-5 */
+        "exxo", /* C#5 - 4th partial */
+        "exoo", /* D-5 */
+        "eoxo", /* D#5 */
+        "eooo", /* E-5 */
+        "gxoo", /* F-5 - 5th partial */
+        "goxo", /* F#5 */
+        "gooo", /* G-5 */
         "+oxx", /* G#5 - 7th partial (6th is too flat)*/
-        "+xxo", /* A-5*/
-        "+xoo", /* A#5*/
-        "+oxo", /* B-5*/
-        "+ooo", /* C-6*/
+        "+xxo", /* A-5 */
+        "+xoo", /* A#5 */
+        "+oxo", /* B-5 */
+        "+ooo", /* C-6 */
     },
 };
 
 /* Native American Flute in A (6 holes)*/
 struct flute flute_naf6 = {
-    6,      /* 6 rows, no overblow*/
-    1,      /* 1 column*/
-    C4 - 3, /* A-4*/
-    18,     /* One octave + 6 higher notes*/
+    6,      /* 6 rows, no overblow */
+    1,      /* 1 column */
+    C4 - 3, /* A-4 */
+    18,     /* One octave + 6 higher notes */
     {
-        "xxxxxx", /* A-3*/
-        "xxxxxQ", /* A#3*/
-        "xxxxxl", /* B-3*/
-        "xxxxxo", /* C-4*/
-        "xxxxox", /* C#4*/
-        "xxxxoo", /* D-4*/
-        "xxxoxo", /* D#4*/
-        "xxxooo", /* E-4*/
-        "xxoxoo", /* F-4*/
-        "xxoooo", /* F#4*/
-        "xoxooo", /* G-5*/
-        "oxxooo", /* G#5*/
-        "ooxooo", /* A-5*/
-        "oxxxxx", /* A#5*/
-        "rxxxxl", /* B-5*/
-        "rxxxxo", /* C-6*/
-        "rxxxlo", /* C#5*/
-        "rxxxoo", /* D-6*/
+        "xxxxxx", /* A-3 */
+        "xxxxxQ", /* A#3 */
+        "xxxxxl", /* B-3 */
+        "xxxxxo", /* C-4 */
+        "xxxxox", /* C#4 */
+        "xxxxoo", /* D-4 */
+        "xxxoxo", /* D#4 */
+        "xxxooo", /* E-4 */
+        "xxoxoo", /* F-4 */
+        "xxoooo", /* F#4 */
+        "xoxooo", /* G-5 */
+        "oxxooo", /* G#5 */
+        "ooxooo", /* A-5 */
+        "oxxxxx", /* A#5 */
+        "rxxxxl", /* B-5 */
+        "rxxxxo", /* C-6 */
+        "rxxxlo", /* C#5 */
+        "rxxxoo", /* D-6 */
     },
 };
 
 /* Native American Flute in A (5 holes)*/
 struct flute flute_naf5 = {
-    5,      /* 6 rows, no overblow*/
-    1,      /* 1 column*/
-    C4 - 3, /* A-4*/
-    18,     /* One octave + 6 higher notes*/
+    5,      /* 6 rows, no overblow */
+    1,      /* 1 column */
+    C4 - 3, /* A-4 */
+    18,     /* One octave + 6 higher notes */
     {
-        "xxxxx", /* A-3*/
-        "xxxxQ", /* A#3*/
-        "xxxxl", /* B-3*/
-        "xxxxo", /* C-4*/
-        "xxxox", /* C#4*/
-        "xxxoo", /* D-4*/
-        "xxoxo", /* D#4*/
-        "xxooo", /* E-4*/
-        "xoxox", /* F-4*/
-        "xoxoo", /* F#4*/
-        "xoooo", /* G-5*/
-        "ooxoo", /* G#5*/
-        "ooooo", /* A-5*/
-        "oxxxx", /* A#5*/
-        "rxxxl", /* B-5*/
-        "rxxxo", /* C-6*/
-        "rxxlo", /* C#5*/
-        "rxxoo", /* D-6*/
+        "xxxxx", /* A-3 */
+        "xxxxQ", /* A#3 */
+        "xxxxl", /* B-3 */
+        "xxxxo", /* C-4 */
+        "xxxox", /* C#4 */
+        "xxxoo", /* D-4 */
+        "xxoxo", /* D#4 */
+        "xxooo", /* E-4 */
+        "xoxox", /* F-4 */
+        "xoxoo", /* F#4 */
+        "xoooo", /* G-5 */
+        "ooxoo", /* G#5 */
+        "ooooo", /* A-5 */
+        "oxxxx", /* A#5 */
+        "rxxxl", /* B-5 */
+        "rxxxo", /* C-6 */
+        "rxxlo", /* C#5 */
+        "rxxoo", /* D-6 */
     },
 };
 
@@ -609,7 +609,7 @@ static void tabs_abc(FILE *f, struct instr *instr, int xpose) {
       continue;
     }
 
-    /* Render a note*/
+    /* Render a note */
     q = 0;
 
     instr->reset(instr->ctx);
@@ -645,7 +645,7 @@ static void tabs_abc(FILE *f, struct instr *instr, int xpose) {
       }
     }
   }
-  /* Final row may be without a newline, flush it*/
+  /* Final row may be without a newline, flush it */
   instr->sym(instr->ctx, '\n');
 }
 
