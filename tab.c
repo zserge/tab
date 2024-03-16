@@ -13,7 +13,8 @@ static char *DIM = "\x1b[35m";   /* Dimmed: magenta */
 static char *ACC = "\x1b[1;33m"; /* Accent: bold yellow */
 static char *ERR = "\x1b[31m";   /* Error:  red */
 
-static char *INDENT = "    ";
+static char INDENT[100] = {0};
+static char VINDENT[100] = {0};
 static char *SHARP = "♯";
 static char *VLINE = "│";
 static char *HLINE = "─";
@@ -804,7 +805,7 @@ static int note(char c) {
   return 0;
 }
 
-static void tabs_abc(FILE *f, struct instr *instr, int xpose) {
+static void tabs_abc(FILE *f, struct instr *instr, int transpose) {
   char line[LINESZ];
   while (fgets(line, sizeof(line), f)) {
     char *p;
@@ -836,7 +837,7 @@ static void tabs_abc(FILE *f, struct instr *instr, int xpose) {
       int n;
       char c = *p;
       if (c == '"') {
-        q = !q;
+        q = !q; /* TODO: maybe support chords output, too? Mind transposing! */
       } else if (c == '\n')
         instr->sym(instr->ctx, '\n');
       else if (isspace(c))
@@ -859,7 +860,7 @@ static void tabs_abc(FILE *f, struct instr *instr, int xpose) {
           }
         }
       out:
-        instr->note(instr->ctx, n + xpose + acc);
+        instr->note(instr->ctx, n + transpose + acc);
         acc = 0;
       }
     }
@@ -929,12 +930,13 @@ int main(int argc, char *argv[]) {
   int c;
   int found = 0;
   int colorize = 0;
-  int xpose = 0;
+  int transpose = 0;
+  int padding = 2;
   unsigned int t;
+  char *endp;
   struct instr *instr = &guitar;
 
-  /* TODO: custom indent */
-  while ((c = getopt(argc, argv, "hCcai:t:")) != -1) {
+  while ((c = getopt(argc, argv, "hCcai:p:t:")) != -1) {
     switch (c) {
       case 'c': colorize = 1; break;
       case 'C': decolorize(); break;
@@ -952,8 +954,29 @@ int main(int argc, char *argv[]) {
           return 1;
         }
         break;
-      case 't': xpose = atoi(optarg); break; /* TODO: invalid transpose */
-      default:  usage(argv[0]); return 1;
+      case 't':
+        transpose = strtol(optarg, &endp, 0);
+        if (endp == optarg || *endp != '\0') {
+          fprintf(stderr, "%s: -t requires a number, got %s\n", argv[0], optarg);
+          return 1;
+        }
+        if (transpose < -24 || transpose > 24) {
+          fprintf(stderr, "%s: invalid transpose, should be -24..+24\n", argv[0]);
+          return 1;
+        }
+        break;
+      case 'p':
+        padding = strtol(optarg, &endp, 0);
+        if (endp == optarg || *endp != '\0') {
+          fprintf(stderr, "%s: -I requires a number, got %s\n", argv[0], optarg);
+          return 1;
+        }
+        if (padding < 0 || padding > 99) {
+          fprintf(stderr, "%s: invalid padding, should be 0..99\n", argv[0]);
+          return 1;
+        }
+        break;
+      default: usage(argv[0]); return 1;
     }
   }
 
@@ -962,8 +985,12 @@ int main(int argc, char *argv[]) {
     decolorize();
   }
 
+  memset(VINDENT, '\n', padding / 2); /* terminal fonts usually have 2:1 proportions */
+  memset(INDENT, ' ', padding);
+
   if (optind == argc) {
-    tabs_abc(stdin, instr, xpose);
+    printf("%s", VINDENT);
+    tabs_abc(stdin, instr, transpose);
   } else {
     int i;
     for (i = optind; i < argc; i++) {
@@ -972,7 +999,8 @@ int main(int argc, char *argv[]) {
         perror("fopen");
         return 1;
       }
-      tabs_abc(f, instr, xpose);
+      printf("%s", VINDENT);
+      tabs_abc(f, instr, transpose);
       fclose(f);
     }
   }
