@@ -2,6 +2,8 @@
 
 Tab is a tiny command-line utility to render tablatures for numerous music instruments.
 
+![Screenshot](/screenshot.png)]
+
 ## Features
 
 * Supports almost every tablature notation!
