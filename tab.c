@@ -141,13 +141,13 @@ static void frets_note(void *ctx, int n) {
 /* TODO: support diatonic instruments: canjo, Seagull Guitar */
 /* TODO: 5-string banjo */
 /* TODO: Balalaika */
-/* TODO: Mandoline */
 
 struct frets frets_diddley = {1, "C", {C4}, 0};
 struct frets frets_gd = {2, "gD", {C4 + 7, C4 + 2}, 0};
 struct frets frets_gc = {2, "gD", {C4 + 7, C4}, 0};
 struct frets frets_cbg = {3, "gDG", {C4 + 7, C4 + 2, C4 - 5}, 0};
 struct frets frets_uke = {4, "AECg", {C4 + 9, C4 + 4, C4, C4 + 7}, 0};
+struct frets frets_mandolin = {4, "EADG", {C4 + 16, C4 + 9, C4 + 2, C4 - 5}, 0};
 struct frets frets_guitar = {6, "eBGDAE", {C4 + 16, C4 + 11, C4 + 7, C4 + 2, C4 - 3, C4 - 8}, 0};
 
 static struct instr diddley = {frets_reset, frets_sym, frets_note, &frets_diddley};
@@ -155,6 +155,7 @@ static struct instr gd = {frets_reset, frets_sym, frets_note, &frets_gd};
 static struct instr gc = {frets_reset, frets_sym, frets_note, &frets_gc};
 static struct instr cbg = {frets_reset, frets_sym, frets_note, &frets_cbg};
 static struct instr uke = {frets_reset, frets_sym, frets_note, &frets_uke};
+static struct instr mandolin = {frets_reset, frets_sym, frets_note, &frets_mandolin};
 static struct instr guitar = {frets_reset, frets_sym, frets_note, &frets_guitar};
 
 /* -------------- Flutes, Brass, Woodwinds ------------------- */
@@ -877,6 +878,7 @@ static struct {
     /* String */
     {"guitar", "6-string Guitar Tabs", &guitar},
     {"uke", "Ukulele Tabs", &uke},
+    {"mandolin", "Mandolin Tabs", &mandolin},
     {"cbg", "Cigar Box Guitar (GDg tuning)", &cbg},
     {"diddley", "Diddley Bow (Unitar)", &diddley},
     {"2gd", "Two-string Diddley Bow (G+D)", &gd},
