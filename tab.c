@@ -46,7 +46,7 @@ static void asciify(void) {
   FT = "^";
   FB = "v";
   FQ = "~";
-  FT = "@";
+  FU = "@";
   FO = "+";
   FP = "+";
   FES = ".";
@@ -73,18 +73,14 @@ static void strcatf(const char *ln, const char *fmt, ...) {
   va_end(va);
 }
 
-int isempty(const char *s) {
-  for (; *s; s++)
-    if (*s != ' ' && *s != '\n') return 0;
-  return 1;
-}
+int isempty(const char *s) { return s[strspn(s, " \n")] == '\0'; }
 
 /* ------------------- String fretted instruments ------------------------- */
 struct frets {
   int n;             /* Number of strings */
   char *tuning;      /* One letter per string */
+  char *frets;       /* Fret labels, e.g. 0 1 2 3 4 5 6 7..., optional */
   int roots[NLINES]; /* Note numbers for each open string */
-
   int hasnotes;
 };
 
@@ -128,11 +124,30 @@ static void frets_note(void *ctx, int n) {
   if (index == -1) {
     for (i = 0; i < f->n; i++) { strcatf(ln[i], "%sx%s-%s", ERR, DIM, RST); }
   } else {
+    char fretsym[LINESZ] = {0};
+    if (f->frets) {
+      char labels[LINESZ], *c, *p;
+      strncpy(labels, f->frets, LINESZ - 1);
+      for (c = p = labels; *c; c++) {
+        if (*c == ' ') {
+          *c = 0;
+          if (fret-- == 0) {
+            strncpy(fretsym, p, LINESZ - 1);
+            break;
+          }
+          p = c + 1;
+        }
+      }
+    } else {
+      snprintf(fretsym, LINESZ - 1, "%d", fret);
+    }
     for (i = 0; i < f->n; i++) {
       if (index != i) {
-        strcatf(ln[i], "%s%s%s", DIM, fret < 10 ? "--" : "---", RST);
+        strcatf(ln[i], "%s%s%s", DIM, strlen(fretsym) == 1 ? "--" : "---", RST);
+      } else if (fretsym[0]) {
+        strcatf(ln[i], "%s%s%s-%s", ACC, fretsym, DIM, RST);
       } else {
-        strcatf(ln[i], "%s%d%s-%s", ACC, fret, DIM, RST);
+        strcatf(ln[i], "%sx%s-%s", ERR, fretsym, DIM, RST);
       }
     }
   }
@@ -142,13 +157,16 @@ static void frets_note(void *ctx, int n) {
 /* TODO: 5-string banjo */
 /* TODO: Balalaika */
 
-struct frets frets_diddley = {1, "C", {C4}, 0};
-struct frets frets_gd = {2, "gD", {C4 + 7, C4 + 2}, 0};
-struct frets frets_gc = {2, "gD", {C4 + 7, C4}, 0};
-struct frets frets_cbg = {3, "gDG", {C4 + 7, C4 + 2, C4 - 5}, 0};
-struct frets frets_uke = {4, "AECg", {C4 + 9, C4 + 4, C4, C4 + 7}, 0};
-struct frets frets_mandolin = {4, "EADG", {C4 + 16, C4 + 9, C4 + 2, C4 - 5}, 0};
-struct frets frets_guitar = {6, "eBGDAE", {C4 + 16, C4 + 11, C4 + 7, C4 + 2, C4 - 3, C4 - 8}, 0};
+struct frets frets_diddley = {1, "C", NULL, {C4}, 0};
+struct frets frets_gd = {2, "gD", NULL, {C4 + 7, C4 + 2}, 0};
+struct frets frets_gc = {2, "gD", NULL, {C4 + 7, C4}, 0};
+struct frets frets_cbg = {3, "gDG", NULL, {C4 + 7, C4 + 2, C4 - 5}, 0};
+struct frets frets_uke = {4, "AECg", NULL, {C4 + 9, C4 + 4, C4, C4 + 7}, 0};
+struct frets frets_mandolin = {4, "EADG", NULL, {C4 + 16, C4 + 9, C4 + 2, C4 - 5}, 0};
+struct frets frets_guitar = {
+    6, "eBGDAE", NULL, {C4 + 16, C4 + 11, C4 + 7, C4 + 2, C4 - 3, C4 - 8}, 0};
+struct frets frets_violin = {
+    4, "EADG", "0 L1 1 L2 2 3 H3 4 H4", {C4 + 16, C4 + 9, C4 + 2, C4 - 5}, 0};
 
 static struct instr diddley = {frets_reset, frets_sym, frets_note, &frets_diddley};
 static struct instr gd = {frets_reset, frets_sym, frets_note, &frets_gd};
@@ -157,6 +175,7 @@ static struct instr cbg = {frets_reset, frets_sym, frets_note, &frets_cbg};
 static struct instr uke = {frets_reset, frets_sym, frets_note, &frets_uke};
 static struct instr mandolin = {frets_reset, frets_sym, frets_note, &frets_mandolin};
 static struct instr guitar = {frets_reset, frets_sym, frets_note, &frets_guitar};
+static struct instr violin = {frets_reset, frets_sym, frets_note, &frets_violin};
 
 /* -------------- Flutes, Brass, Woodwinds ------------------- */
 
@@ -883,6 +902,7 @@ static struct {
     {"diddley", "Diddley Bow (Unitar)", &diddley},
     {"2gd", "Two-string Diddley Bow (G+D)", &gd},
     {"2gc", "Two-string Diddley Bow (G+C)", &gc},
+    {"violin", "Violin Tabs", &violin},
     /* Woodwind+Brass */
     {"recorder", "Recorder (German System)", &german},
     {"german", "Recorder (German System)", &german},
